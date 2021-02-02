@@ -154,6 +154,7 @@ return [
          * Application Service Providers...
          */
         App\Providers\RouteServiceProvider::class,
+        App\Providers\HorizonServiceProvider::class,
 
     ],
 
