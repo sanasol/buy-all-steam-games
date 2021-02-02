@@ -59,19 +59,19 @@ class FetchApps implements ShouldQueue
                 continue;
             }
 
-            $original += $result['data']['price_overview']['initial'];
-            $sale += $result['data']['price_overview']['final'];
+            $original += $result['data']['price_overview']['initial'] / 100;
+            $sale += $result['data']['price_overview']['final'] / 100;
         }
 
         Record::where('cc', config('steam.country'))
             ->where('language', config('steam.language'))
             ->where('created_at', '>=', today())
-            ->increment('original', $original / 100);
+            ->increment('original', $original);
 
         Record::where('cc', config('steam.country'))
             ->where('language', config('steam.language'))
             ->where('created_at', '>=', today())
-            ->increment('sale', $sale / 100);
+            ->increment('sale', $sale);
 
         Cache::pull('view');
 
