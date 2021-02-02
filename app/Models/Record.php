@@ -28,7 +28,7 @@ class Record extends Model
      */
     public function getOriginalAttribute($value)
     {
-        return number_format($value, 2);
+        return number_format($value, 2,'.', ' ');
     }
 
     /**
@@ -40,7 +40,7 @@ class Record extends Model
      */
     public function getSaleAttribute($value)
     {
-        return number_format($value, 2);
+        return number_format($value, 2,'.', ' ');
     }
 
     /**
