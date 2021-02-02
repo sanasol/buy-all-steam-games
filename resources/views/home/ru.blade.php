@@ -12,7 +12,7 @@
                 <p>Вы когда-нибудь задумывались, сколько стоит купить все игры в Steam?</p>
                 <p>Так вот, сейчас это будет стоить примерно <span class="text-danger">{{ $record->sale }} руб.</span> с учетом скидок или <span
                             class="text-danger">{{ $record->original }} руб.</span> за полную стоимость.</p>
-                <p>Страница обновлена {{ $record->created_at->diffForHumans() }}, цена актуальная для {{$record->cc}} региона и языка - {{$record->language}}.
+                <p>Страница обновлена {{ $record->created_at->diffForHumans() }}, цена актуальна для {{$record->cc}} региона и языка - {{$record->language}}.
                 </p>
             </div>
             <h2 class="mt-5">История изменения</h2>

@@ -1,6 +1,8 @@
 window.Vue = require('vue');
 
-Vue.component('chart', require('./components/Chart.vue'));
+import Chart from './components/Chart'
+
+Vue.component("chart", Chart);
 
 const app = new Vue({
     el: '#app'

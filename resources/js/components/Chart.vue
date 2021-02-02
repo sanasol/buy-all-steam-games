@@ -18,7 +18,7 @@
         props: ['records'],
         data() {
             return {
-                currentButton: 'All',
+                currentButton: 'Всё время',
                 sale: null,
                 original: null,
                 chart: null
@@ -27,7 +27,7 @@
         },
         computed: {
             buttons() {
-                return ['All', 'Year', 'Month']
+                return ['Всё время', 'Год', 'Месяц']
             }
         },
         methods: {
@@ -40,9 +40,9 @@
 
                 let momentFilter
 
-                if (button === 'Year'){
+                if (button === 'Год'){
                     momentFilter = moment().subtract(1, 'years')
-                } else if (button === 'Month'){
+                } else if (button === 'Месяц'){
                     momentFilter = moment().subtract(1, 'months')
                 }
 
@@ -65,7 +65,7 @@
 
                 this.chart.options.scales.yAxes = [{
                     ticks: {
-                        beginAtZero: button !== 'Month'
+                        beginAtZero: button !== 'Месяц'
                     }
                 }]
 
@@ -96,13 +96,13 @@
                 data: {
                     datasets: [
                         {
-                            label: 'Sale Price',
+                            label: 'С учетом скидок',
                             data: this.sale,
                             borderColor: '#0074D9',
                             backgroundColor: 'rgba(0, 116, 217, 0.2)'
                         },
                         {
-                            label: 'Original Price',
+                            label: 'Полная стоимость',
                             data: this.original
                         }
                     ]
@@ -112,7 +112,7 @@
                     maintainAspectRatio: false,
                     title: {
                         display: true,
-                        text: 'Total Price (USD)'
+                        text: 'Всего (руб.)'
                     },
                     tooltips: {
                         mode: 'index',
