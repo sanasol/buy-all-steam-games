@@ -76,7 +76,7 @@
             this.sale = this.records.map(item => {
                     return {
                         x: moment(item.created_at),
-                        y: parseFloat(item.sale.replace(',', ''))
+                        y: parseFloat(item.sale.replaceAll(',', ''))
                     }
                 }
             )
@@ -84,7 +84,7 @@
             this.original = this.records.map(item => {
                     return {
                         x: moment(item.created_at),
-                        y: parseFloat(item.original.replace(',', ''))
+                        y: parseFloat(item.original.replaceAll(',', ''))
                     }
                 }
             )
