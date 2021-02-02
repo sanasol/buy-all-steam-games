@@ -23,19 +23,12 @@
 <div id="app" class="container">
     @yield('content')
 </div>
-<div class="container mt-5">
-    <div class="row">
-        <div class="col">
-            @include('layouts.ad')
-        </div>
-    </div>
-</div>
 <footer id="footer" class="container mt-5">
     <div class="row">
         <div class="col">
             <p>Copyright &copy {{ date('Y') }} <a href="https://seewang.me">Chenggang
                     Wang</a> | Hosted on <a
-                        href="https://m.do.co/c/50614500d0db" target="_blank">Digtal Ocean</a></p>
+                        href="https://m.do.co/c/0bcce777f272" target="_blank">Digtal Ocean</a></p>
         </div>
     </div>
 </footer>

@@ -23,6 +23,19 @@ class SteamController extends Controller
      *
      * @return \Illuminate\View\View
      */
+    public function en()
+    {
+        app()->setLocale('en');
+        Carbon::setLocale('en');
+
+        return $this->getView('en');
+    }
+
+    /**
+     * Show Chinese homepage.
+     *
+     * @return \Illuminate\View\View
+     */
     public function zh()
     {
         app()->setLocale('zh');
@@ -38,7 +51,7 @@ class SteamController extends Controller
      *
      * @return mixed
      */
-    public function getView($lang = 'en')
+    public function getView($lang = 'ru')
     {
         return Cache::remember("view.$lang", 1440, function () use ($lang) {
             $records = Record::latest()->get();

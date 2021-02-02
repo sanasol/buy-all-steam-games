@@ -4,20 +4,15 @@
     <div class="row">
         <div id="showcase" class="col">
             <h1 class="mt-5">Buy All Steam Games</h1>
-            <div class="mt-3">
-                <a class="github-button" href="https://github.com/cwang22" data-size="large" data-show-count="true"
-                   aria-label="Follow @cwang22 on GitHub">Follow @cwang22</a>
-                <a class="github-button" href="https://github.com/cwang22/buy-all-steam-games" data-size="large"
-                   data-show-count="true" aria-label="Star cwang22/buy-all-steam-games on GitHub">Star</a>
-            </div>
+            @include('layouts.github')
             <div class="mt-5">
-                <p>English | <a href="{{ url('/zh') }}">中文</a></p>
+                <p><a href="{{ url('/') }}">Русский</a> | English | <a href="{{ url('/zh') }}">中文</a></p>
             </div>
             <div class="mt-5">
                 <p>Ever wonder how much does it cost to buy all games from Steam?</p>
-                <p>Well, at the moment it costs <span class="text-danger">${{ $record->sale }}</span> at a discounted
+                <p>Well, at the moment it costs <span class="text-danger">RUB {{ $record->sale }}</span> at a discounted
                     price which costs <span
-                            class="text-danger">${{ $record->original }}</span> at full price.</p>
+                            class="text-danger">RUB {{ $record->original }}</span> at full price.</p>
                 <p>This page was last updated {{ $record->created_at->diffForHumans() }}, based on the price of
                     the {{$record->cc}} region and {{$record->language}} language.
                 </p>

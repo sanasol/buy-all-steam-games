@@ -39,4 +39,8 @@ return [
         'id' => env('GOOGLE_ANALYTICS_TRACKING_ID'),
     ],
 
+    'ya' => [
+        'id' => env('YA_METRIKA_TRACKING_ID'),
+    ],
+
 ];
