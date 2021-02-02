@@ -2,11 +2,15 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\FetchApps;
 use App\Models\Record;
+use ArrayIterator;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
+use InfiniteIterator;
+use LimitIterator;
 
 class Fetch extends Command
 {
@@ -33,48 +37,54 @@ class Fetch extends Command
      */
     public function handle(Client $client)
     {
+        Record::where('cc', config('steam.country'))
+            ->where('language', config('steam.language'))
+            ->where('created_at', '>=', today())
+            ->delete();
+
+        Record::create([
+            'original' => 0,
+            'sale'     => 0,
+            'cc'       => config('steam.country'),
+            'language' => config('steam.language'),
+        ]);
+
         $json = json_decode($client->get('http://api.steampowered.com/ISteamApps/GetAppList/v2')->getBody(), true);
         $lists = collect($json['applist']['apps'])->pluck('appid');
         $chunks = $lists->chunk(config('steam.chunk_size'));
 
-        $this->info('fetching...');
+        $this->info('fetching... '.$chunks->count());
         $progressBar = $this->output->createProgressBar($chunks->count());
 
-        $original = 0;
-        $sale = 0;
+        $proxies = [];
 
-        /** @var Collection $chunk */
-        foreach ($chunks as $chunk) {
-            $appids = $chunk->implode(',');
-            $json = json_decode($client->get('http://store.steampowered.com/api/appdetails/', [
-                'query' => [
-                    'appids'  => $appids,
-                    'cc'      => config('steam.country'),
-                    'l'       => config('steam.language'),
-                    'v'       => 1,
-                    'filters' => 'price_overview',
-                ],
-            ])->getBody(), true);
-
-            $results = collect($json);
-
-            foreach ($results as $result) {
-                if (!isset($result['data']['price_overview'])) {
-                    continue;
-                }
-
-                $original += $result['data']['price_overview']['initial'];
-                $sale += $result['data']['price_overview']['final'];
-            }
-
-            $progressBar->advance();
-
-            // Rate limit of steam API is about 10 requests every 10 seconds
-            // Sleep 2 seconds just to be sure
-            sleep(2);
+        foreach(range(3001, 3021) as $port) {
+            $proxies[] = config('steam.proxy1').$port;
         }
 
-        $this->store($original, $sale);
+        foreach(range(30011, 30045) as $port) {
+            $proxies[] = config('steam.proxy2').$port;
+        }
+
+        /** @var Collection $chunk */
+        foreach ($chunks as $i => $chunk) {
+            $appids = $chunk->implode(',');
+
+            $subset = iterator_to_array(
+                new LimitIterator(
+                    new InfiniteIterator(
+                        new ArrayIterator($proxies)
+                    ),
+                    $i,
+                    1
+                )
+            );
+
+            $proxy = array_values($subset)[0];
+
+            dispatch(new FetchApps($appids, $proxy));
+            $progressBar->advance();
+        }
     }
 
     /**
