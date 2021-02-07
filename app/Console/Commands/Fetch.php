@@ -58,9 +58,9 @@ class Fetch extends Command
 
         $proxies = [];
 
-        foreach(range(3001, 3021) as $port) {
-            $proxies[] = config('steam.proxy1').$port;
-        }
+//        foreach(range(3001, 3021) as $port) {
+//            $proxies[] = config('steam.proxy1').$port;
+//        }
 
         foreach(range(30011, 30045) as $port) {
             $proxies[] = config('steam.proxy2').$port;
