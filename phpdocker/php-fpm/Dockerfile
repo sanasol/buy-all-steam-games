@@ -1,8 +1,7 @@
-FROM node:14
+FROM node:15
 WORKDIR "/application"
-COPY package*.json ./
-RUN npm install
-RUN npm run prod
+COPY . .
+RUN yarn && yarn run prod
 
 FROM phpdockerio/php74-fpm:latest
 
