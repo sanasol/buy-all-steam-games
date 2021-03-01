@@ -1,3 +1,8 @@
+FROM node:14
+WORKDIR "/application"
+COPY package*.json ./
+RUN npm ci --only=production
+
 FROM phpdockerio/php74-fpm:latest
 
 WORKDIR "/application"

@@ -31,13 +31,15 @@ services:
           - .:/application
           - ./phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       ports:
-       - "${APP_IP}:80:80"
+       - "${APP_IP}:${APP_PORT}:80"
       links:
        - "php-fpm:php-fpm"
 
     php-fpm:
       restart: always
-      build: phpdocker/php-fpm
+      build:
+        context: .
+        dockerfile: ./phpdocker/php-fpm/Dockerfile
       container_name: steam-php-fpm
       working_dir: /application
       ports:
