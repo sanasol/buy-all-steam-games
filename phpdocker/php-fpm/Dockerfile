@@ -1,13 +1,6 @@
-FROM node:15 as front
-WORKDIR "/application"
-COPY . .
-RUN yarn && yarn run prod
-
 FROM phpdockerio/php74-fpm:latest
 
 WORKDIR "/application"
-
-COPY --from=front /application/public /application/public
 
 # Fix debconf warnings upon build
 ARG DEBIAN_FRONTEND=noninteractive
