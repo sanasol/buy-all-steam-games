@@ -4,7 +4,7 @@
 
 Ever wonder how much does it cost to buy all games from Steam?
 
-You can check it out at http://steam.seewang.me
+You can check it out at https://steam.sanasol.ws and https://steam.seewang.me
 
 ## How does it work?
 This application was inspired by http://buyallofsteam.appspot.com/, but it haven't been updated since 2014.</p>
